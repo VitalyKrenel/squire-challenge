@@ -29,7 +29,17 @@ Response example:
         "id": 1,
         "firstName": "James",
         "lastName": "Richards",
-        "services": [{ id: 1, name: 'Buzz Cut', price: 2000, currency: 'usd' }] // a list of barber services
+        "photo": "https://via.placeholder.com/150",
+        // a list of services that a particular barber serves
+        "services": [
+            { 
+                "id": 1,
+                "name": "Buzz Cut",
+                "price": 2000,
+                "currency": "usd",
+                "duration": 75
+            }
+        ]
     }
 ]
 ```
@@ -44,7 +54,8 @@ Response example:
         "id": 1,
         "name": "Buzz Cut",
         "price": 2000, // price in cents
-        "currency": "usd"
+        "currency": "usd",
+        "duration": 75, // duration in minutes
     }
 ]
 ```
@@ -68,13 +79,10 @@ After that you need to display available barbers or available services according
 2. If user wants to choose a professional, you should show all available professionals. Once a professional is chosen, you should show all services that are provided by the selected professional.
 3. If user wants to choose a service, you should show all available services. Once a service is chosen, you should show all professionals that provide the selected service.
 
-Here's an example of how it looks on Squire booking platform.
-Note, that you don't have to implement the same experience or styling. It can be done 100% the way you want it to be.
-You can use router or place everything on one page, create a shiny UI or use default elements, it doesn't matter.
+A designer provided you with a design for the feature that shows how both flows work.
+You can check it out [here](https://www.figma.com/file/1kF0YUsZn28IvYX9pW0y4h/Squire-Tech-Challenge). Only one screen size is supported.
 
-![Squre Booking](./assets/squire-booking.gif)
-
-## Process
-1. Create a new branch from `master` branch. Use the following pattern: `YYYY-MM-DD/fistname-lastname`. If Alex Khismatulin would do the challenge on 2020/07/15, the branch would be called `2020-07-15/alex-khismatulin`.
+## Submission
+1. Create a new branch from `master` branch. Use the following pattern: `YYYY-MM-DD/firstname-lastname`. If Alex Khismatulin would do the challenge on 2020/07/15, the branch would be called `2020-07-15/alex-khismatulin`.
 2. Commit your changes once you're done. Push the branch and create a pull request into `master`.
 3. Notify the person who gave you the challenge.
