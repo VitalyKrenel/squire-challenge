@@ -20,7 +20,7 @@ npm run build
 There are two mocked endpoints available.
 
 ##### Available barbers
-```
+```text
 GET /api/barbers/
 
 Response example:
@@ -45,7 +45,7 @@ Response example:
 ```
 
 ##### Available services
-```
+```text
 GET /api/services/
 
 Response example:
@@ -80,7 +80,11 @@ After that you need to display available barbers or available services according
 3. If user wants to choose a service, you should show all available services. Once a service is chosen, you should show all professionals that provide the selected service.
 
 A designer provided you with a design for the feature that shows how both flows work.
-You can check it out [here](https://www.figma.com/file/1kF0YUsZn28IvYX9pW0y4h/Squire-Tech-Challenge). Only one screen size is supported.
+You can see it [here](https://www.figma.com/file/1kF0YUsZn28IvYX9pW0y4h/Squire-Tech-Challenge). Only one screen size is supported.
+
+## What we expect from the code challenge
+* Good software engineering practices are used
+* The code is designed and structured as if was a production system
 
 ## Submission
 1. Create a new branch from `master` branch. Use the following pattern: `YYYY-MM-DD/firstname-lastname`. If Alex Khismatulin would do the challenge on 2020/07/15, the branch would be called `2020-07-15/alex-khismatulin`.
