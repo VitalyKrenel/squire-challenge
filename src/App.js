@@ -2,11 +2,12 @@ import styled, { createGlobalStyle } from 'styled-components';
 import bgImage from './BackgroundImage.jpg';
 
 const BaseStyle = createGlobalStyle`
-  html, body {
+  html,
+  body {
     width: 100%;
     height: 100%;
-    margin: 0;
     padding: 0;
+    margin: 0;
   }
 
   html {
@@ -20,20 +21,20 @@ const BaseStyle = createGlobalStyle`
   }
 
   #react-root {
-    height: 100%;
     width: 100%;
+    height: 100%;
   }
 `;
 
 const Layout = styled.div`
   display: flex;
-  flex-direction: column;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  flex-direction: column;
   padding: 0 82px;
-
-  background: linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #F7F7F7 71.83%),
-              url(${bgImage}) center center no-repeat;
+  background:
+    linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #f7f7f7 71.83%),
+    url(${bgImage}) center center no-repeat;
   background-size: cover;
 `;
 
@@ -45,45 +46,40 @@ const Logo = styled.a`
   display: flex;
   align-items: center;
   padding: 30px 48px;
-
   background-color: #161616;
   border-radius: 0 0 8px 8px;
-
-  font-family: Bebas Neue;
-  font-weight: bold;
+  color: #fff;
+  font-family: Bebas Neue, sans-serif;
   font-size: 28px;
+  font-weight: bold;
   letter-spacing: 3px;
-  color: #FFFFFF;
   text-decoration: none;
 `;
 
 const Barbershop = styled.div`
   display: flex;
   flex-direction: column;
-  margin: auto 0;
   padding-left: 106px;
+  margin: auto 0;
 `;
 
 const Name = styled.p`
-  margin: 0 0 24px;
   width: 200px;
-
-  font-family: SF Pro Display;
-  font-weight: bold;
+  margin: 0 0 24px;
+  color: #000;
+  font-family: SF Pro Display, sans-serif;
   font-size: 48px;
+  font-weight: bold;
   line-height: 57px;
-
-  color: #000000;
 `;
 
 const Address = styled.div`
   margin: 0 0 48px;
-
-  font-family: SF Pro Display;
+  color: rgba(60, 60, 67, 0.6);
+  font-family: SF Pro Display, sans-serif;
   font-size: 20px;
   line-height: 26px;
-  color: rgba(60, 60, 67, 0.6);
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const AddressLine = styled.p`
@@ -97,13 +93,11 @@ const ActionsRow = styled.div`
 
 const Action = styled.button`
   padding: 16px 32px;
-  margin-left: 24px;
-
-  background-color: #000000;
   border: none;
+  margin-left: 24px;
+  background-color: #000;
   border-radius: 8px;
-
-  color: #FFFFFF;
+  color: #fff;
 `;
 
 const App = () => (
