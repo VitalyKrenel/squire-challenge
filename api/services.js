@@ -1,4 +1,4 @@
-export default [
+export const services = [
   {
     id: 1,
     name: 'Advanced style scissor cut',
@@ -49,7 +49,8 @@ export default [
     duration: 30,
   },
   {
-    id: 8, name: 'Executive package',
+    id: 8,
+    name: 'Executive package',
     price: 9500,
     currency: 'usd',
     duration: 75,

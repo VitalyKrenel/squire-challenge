@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import bgImage from './BackgroundImage.jpg'
+import bgImage from './BackgroundImage.jpg';
 
 const BaseStyle = createGlobalStyle`
   html, body {
@@ -64,7 +64,6 @@ const Barbershop = styled.div`
   padding-left: 106px;
 `;
 
-
 const Name = styled.p`
   margin: 0 0 24px;
   width: 200px;
@@ -107,30 +106,28 @@ const Action = styled.button`
   color: #FFFFFF;
 `;
 
-const App = () => {
-  return (
-    <>
-      <BaseStyle/>
-      <Layout>
-        <Header>
-          <Logo href="/">Squire</Logo>
-        </Header>
+const App = () => (
+  <>
+    <BaseStyle />
+    <Layout>
+      <Header>
+        <Logo href="/">Squire</Logo>
+      </Header>
 
-        <Barbershop>
-          <Name>X-CUTZ Barbershop</Name>
-          <Address>
-            <AddressLine>4791  Lowndes Hill Park Road</AddressLine>
-            <AddressLine>Bakersfield, CA 93307</AddressLine>
-          </Address>
+      <Barbershop>
+        <Name>X-CUTZ Barbershop</Name>
+        <Address>
+          <AddressLine>4791  Lowndes Hill Park Road</AddressLine>
+          <AddressLine>Bakersfield, CA 93307</AddressLine>
+        </Address>
 
-          <ActionsRow>
-            <Action>Choose a service</Action>
-            <Action>Choose a barber</Action>
-          </ActionsRow>
-        </Barbershop>
-      </Layout>
-    </>
-  );
-};
+        <ActionsRow>
+          <Action>Choose a service</Action>
+          <Action>Choose a barber</Action>
+        </ActionsRow>
+      </Barbershop>
+    </Layout>
+  </>
+);
 
 export { App };

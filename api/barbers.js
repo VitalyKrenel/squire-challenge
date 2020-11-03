@@ -1,4 +1,4 @@
-export default [
+export const barbers = [
   {
     id: 1,
     firstName: 'Alex',
@@ -113,7 +113,8 @@ export default [
         duration: 90,
       },
       {
-        id: 8, name: 'Executive package',
+        id: 8,
+        name: 'Executive package',
         price: 9500,
         currency: 'usd',
         duration: 75,
@@ -155,7 +156,8 @@ export default [
         duration: 30,
       },
       {
-        id: 8, name: 'Executive package',
+        id: 8,
+        name: 'Executive package',
         price: 9500,
         currency: 'usd',
         duration: 75,
@@ -276,7 +278,8 @@ export default [
         duration: 30,
       },
       {
-        id: 8, name: 'Executive package',
+        id: 8,
+        name: 'Executive package',
         price: 9500,
         currency: 'usd',
         duration: 75,
