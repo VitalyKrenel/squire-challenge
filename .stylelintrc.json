@@ -4,6 +4,7 @@
 		"stylelint-order"
   ],
   "rules": {
-    "value-keyword-case": null
+    "value-keyword-case": null,
+    "indentation": [2, { "baseIndentLevel": 1 }]
   }
 }
