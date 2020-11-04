@@ -26,6 +26,8 @@ module.exports = {
     'react/jsx-filename-extension': 'off',
     'import/prefer-default-export': 'off',
     'lines-between-class-members': 'off',
-    'import/no-default-export': 1,
+    'import/no-default-export': 'warn',
+    'react/prop-types': ['warn', { ignore: ['children'] }],
+    'react/require-default-props': 'off',
   },
 };
