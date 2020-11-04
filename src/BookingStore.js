@@ -1,12 +1,14 @@
 import { makeAutoObservable } from 'mobx';
 
+import { barbers } from '~/api/barbers';
+
 const STEP_CHOOSE_BARBER = 'choose-barber-step';
 const STEP_CHOOSE_SERVICE = 'choose-service-step';
 
 const BookingStore = class {
-  currentStep = STEP_CHOOSE_BARBER;
-  barber = null;
-  service = null;
+  currentStep = STEP_CHOOSE_SERVICE;
+  barber = barbers[0];
+  service = barbers[0].services[0];
 
   constructor() {
     makeAutoObservable(this);

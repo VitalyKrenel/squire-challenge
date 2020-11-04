@@ -14,6 +14,7 @@ const BaseStyle = createGlobalStyle`
 
   html {
     width: 100%;
+    height: 100%;
     box-sizing: border-box;
   }
 
@@ -29,27 +30,25 @@ const BaseStyle = createGlobalStyle`
 
   #react-root {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
+    background: #f7f7f7;
   }
 `;
-
-const getBackground = (hasBackgroundImage) => (hasBackgroundImage ? css`
-  background:
-    linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #f7f7f7 71.83%),
-    url(${bgImage}) center center no-repeat;
-  background-size: cover;
-` : css`
-  background: #f7f7f7;
-`);
 
 const Layout = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+  min-height: 100vh;
   flex-direction: column;
   padding: 0 82px;
 
-  ${({ hasBackgroundImage }) => getBackground(hasBackgroundImage)}
+  ${({ hasBackgroundImage }) => hasBackgroundImage && css`
+    background:
+      linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #f7f7f7 71.83%),
+      url(${bgImage}) center center no-repeat;
+    background-size: cover;
+  `}
 `;
 
 const Header = styled.header`
@@ -77,7 +76,7 @@ const Barbershop = styled.div`
   margin: auto 0;
 `;
 
-const Name = styled.p`
+const BarbershopName = styled.p`
   width: 200px;
   margin: 0 0 24px;
   color: #000;
@@ -191,6 +190,8 @@ const AboutBarberLink = styled.a`
 `;
 
 const ContentContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
   padding-top: 70px;
 `;
 
@@ -254,10 +255,13 @@ const Price = styled.p`
 `;
 
 const Order = styled.div`
+  display: flex;
   width: 412px;
-  min-height: 760px;
+  min-height: 660px;
+  flex-direction: column;
   padding: 40px 32px;
   border: 1px solid #e1e1e1;
+  margin-left: auto;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
@@ -265,19 +269,102 @@ const Order = styled.div`
 
 const Heading = styled.p`
   margin: 0 0 32px;
+  font-family: SF Pro Display, sans-serif;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 33px;
 `;
 
 const OrderDetails = styled.ul`
   padding: 0;
   margin: 0;
+  counter-reset: order-line;
   list-style: none;
 `;
 
-const OrderItem = styled.li`
+const OrderLine = styled.li`
+  position: relative;
+  display: flex;
+  flex-direction: column;
   margin: 0;
 
   &::before {
-    content: '';
+    position: absolute;
+
+    /* Visually align circle with barber's name */
+    top: 2px;
+    left: 0;
+    display: flex;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+
+    /* Visually align number with barber's name */
+    padding: 2px 0 0;
+    background-color: #000;
+    border-radius: 50%;
+    color: #fff;
+    content: counter(order-line);
+    counter-increment: order-line;
+    font-family: SF Pro Display, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 16px;
+  }
+`;
+
+const OrderLineRow = styled.div`
+  display: flex;
+  margin-bottom: 16px;
+`;
+
+const OrderLineBarber = styled(BarberName)`
+  margin: 0 0 0 32px;
+`;
+
+const OrderLinePrice = styled(Price)`
+  margin: 0 0 0 auto;
+  font-size: 20px;
+  line-height: 24px;
+`;
+
+const OrderLineDescription = styled.p`
+  margin: 0;
+  color: #3c3c43;
+  font-family: SF Pro Text, sans-serif;
+  font-size: 17px;
+  line-height: 22px;
+`;
+
+const ChooseTimeButton = styled.button`
+  width: 100%;
+  height: 48px;
+  border: none;
+  margin-top: auto;
+  background: #000;
+  border-radius: 8px;
+  color: #fff;
+  font-family: SF Pro Text, sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 18px;
+  transition:
+    all 0.2s 0s ease-out,
+    height 0.1s 0s ease-in;
+
+  &:hover,
+  &:focus {
+    border: 1px solid #000;
+    background: #fff;
+    color: #000;
+    outline: none;
+  }
+
+  &:active {
+    height: 44px;
   }
 `;
 
@@ -291,7 +378,7 @@ const App = observer(() => (
 
       {!bookingStore.currentStep && (
         <Barbershop>
-          <Name>X-CUTZ Barbershop</Name>
+          <BarbershopName>X-CUTZ Barbershop</BarbershopName>
           <Address>
             <AddressLine>4791  Lowndes Hill Park Road</AddressLine>
             <AddressLine>Bakersfield, CA 93307</AddressLine>
@@ -352,6 +439,28 @@ const App = observer(() => (
               </ServiceCard>
             </ThemeProvider>
           </CardGrid>
+
+          {bookingStore.barber && bookingStore.service && (
+            <Order>
+              <Heading>Your order</Heading>
+              <OrderDetails>
+                <OrderLine>
+                  <OrderLineRow>
+                    <OrderLineBarber>{bookingStore.barber.firstName}</OrderLineBarber>
+                    <OrderLinePrice>
+                      $
+                      {bookingStore.service.price / 100}
+                    </OrderLinePrice>
+                  </OrderLineRow>
+                  <OrderLineDescription>
+                    {bookingStore.service.name}
+                  </OrderLineDescription>
+                </OrderLine>
+              </OrderDetails>
+
+              <ChooseTimeButton>Choose a time</ChooseTimeButton>
+            </Order>
+          )}
         </ContentContainer>
       ) : null}
     </Layout>
