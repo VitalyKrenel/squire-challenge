@@ -28,7 +28,7 @@ const ServiceInfo = styled.div`
 
 const Duration = styled.p`
   margin: 0;
-  color: ${({ isSelected }) => isSelected && 'rgba(60, 60, 67, 0.6)'};
+  color: ${({ isSelected }) => !isSelected && 'rgba(60, 60, 67, 0.6)'};
   font-family: SF Pro Text, sans-serif;
   font-size: 15px;
   line-height: 22px;

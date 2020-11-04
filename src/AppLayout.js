@@ -42,10 +42,10 @@ const Layout = styled.div`
   padding: 0 82px;
 
   ${({ hasBackgroundImage }) => hasBackgroundImage && css`
-    background:
-      linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #f7f7f7 71.83%),
-      url(${bgImage}) center center no-repeat;
-    background-size: cover;
+  background:
+    linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #f7f7f7 71.83%),
+    url(${bgImage}) center center no-repeat;
+  background-size: cover;
   `}
 `;
 
