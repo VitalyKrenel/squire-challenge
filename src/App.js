@@ -1,73 +1,9 @@
-import styled, { createGlobalStyle, css, ThemeProvider } from 'styled-components';
+import styled, { css, ThemeProvider } from 'styled-components';
 import { observer } from 'mobx-react-lite';
 
-import bgImage from './BackgroundImage.jpg';
 import { bookingStore, STEP_CHOOSE_SERVICE, STEP_CHOOSE_BARBER } from './BookingStore';
 import { barbers } from '~/api/barbers';
-
-const BaseStyle = createGlobalStyle`
-  html,
-  body {
-    padding: 0;
-    margin: 0;
-  }
-
-  html {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-  }
-
-  *,
-  *::after,
-  *::before {
-    box-sizing: inherit;
-  }
-
-  body {
-    min-height: 100%;
-  }
-
-  #react-root {
-    width: 100%;
-    min-height: 100vh;
-    background: #f7f7f7;
-  }
-`;
-
-const Layout = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  flex-direction: column;
-  padding: 0 82px;
-
-  ${({ hasBackgroundImage }) => hasBackgroundImage && css`
-    background:
-      linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #f7f7f7 71.83%),
-      url(${bgImage}) center center no-repeat;
-    background-size: cover;
-  `}
-`;
-
-const Header = styled.header`
-  display: flex;
-`;
-
-const Logo = styled.a`
-  display: flex;
-  align-items: center;
-  padding: 30px 48px;
-  background-color: #161616;
-  border-radius: 0 0 8px 8px;
-  color: #fff;
-  font-family: Bebas Neue, sans-serif;
-  font-size: 28px;
-  font-weight: bold;
-  letter-spacing: 3px;
-  text-decoration: none;
-`;
+import { AppLayout } from './AppLayout';
 
 const Barbershop = styled.div`
   display: flex;
@@ -384,108 +320,101 @@ const ChooseTimeButton = styled.button`
 `;
 
 const App = observer(() => (
-  <>
-    <BaseStyle />
-    <Layout hasBackgroundImage={!bookingStore.currentStep}>
-      <Header>
-        <Logo href="/">Squire</Logo>
-      </Header>
+  <AppLayout>
+    {!bookingStore.currentStep && (
+    <Barbershop>
+      <BarbershopName>X-CUTZ Barbershop</BarbershopName>
+      <Address>
+        <AddressLine>4791  Lowndes Hill Park Road</AddressLine>
+        <AddressLine>Bakersfield, CA 93307</AddressLine>
+      </Address>
 
-      {!bookingStore.currentStep && (
-        <Barbershop>
-          <BarbershopName>X-CUTZ Barbershop</BarbershopName>
-          <Address>
-            <AddressLine>4791  Lowndes Hill Park Road</AddressLine>
-            <AddressLine>Bakersfield, CA 93307</AddressLine>
-          </Address>
+      <ActionsRow>
+        <Action onClick={() => bookingStore.setStep(STEP_CHOOSE_SERVICE)}>
+          Choose a service
+        </Action>
+        <Action onClick={() => bookingStore.setStep(STEP_CHOOSE_BARBER)}>
+          Choose a barber
+        </Action>
+      </ActionsRow>
+    </Barbershop>
+    )}
 
-          <ActionsRow>
-            <Action onClick={() => bookingStore.setStep(STEP_CHOOSE_SERVICE)}>
-              Choose a service
-            </Action>
-            <Action onClick={() => bookingStore.setStep(STEP_CHOOSE_BARBER)}>
-              Choose a barber
-            </Action>
-          </ActionsRow>
-        </Barbershop>
-      )}
+    {bookingStore.currentStep === STEP_CHOOSE_BARBER ? (
+      <Section>
+        <ContentContainer>
+          <ContentHeading>Choose a professional</ContentHeading>
+          <CardGrid>
+            <Card onClick={() => {
+              bookingStore.setBarber(barbers[0]);
+              bookingStore.toServiceStep();
+            }}
+            >
+              <BarberPhoto src="" />
+              <BarberName>Alex K.</BarberName>
+              <AvailabilityStatus>
+                <Status>Available today</Status>
+              </AvailabilityStatus>
+              <AboutBarberLink href="#">About Alex</AboutBarberLink>
+            </Card>
+          </CardGrid>
+        </ContentContainer>
+      </Section>
+    ) : null}
 
-      {bookingStore.currentStep === STEP_CHOOSE_BARBER ? (
-        <Section>
-          <ContentContainer>
-            <ContentHeading>Choose a professional</ContentHeading>
-            <CardGrid>
-              <Card onClick={() => {
-                bookingStore.setBarber(barbers[0]);
-                bookingStore.toServiceStep();
-              }}
-              >
-                <BarberPhoto src="" />
-                <BarberName>Alex K.</BarberName>
-                <AvailabilityStatus>
-                  <Status>Available today</Status>
-                </AvailabilityStatus>
-                <AboutBarberLink href="#">About Alex</AboutBarberLink>
-              </Card>
-            </CardGrid>
-          </ContentContainer>
-        </Section>
-      ) : null}
-
-      {bookingStore.currentStep === STEP_CHOOSE_SERVICE ? (
-        <Section>
-          <ContentContainer>
-            <ContentHeading>Choose a service</ContentHeading>
-            <CardGrid>
-              <ThemeProvider
-                theme={
+    {bookingStore.currentStep === STEP_CHOOSE_SERVICE ? (
+      <Section>
+        <ContentContainer>
+          <ContentHeading>Choose a service</ContentHeading>
+          <CardGrid>
+            <ThemeProvider
+              theme={
                 bookingStore.service === bookingStore.barber?.services[0]
                   ? serviceThemes.selected
                   : serviceThemes.initial
               }
+            >
+              <ServiceCard
+                onClick={() => {
+                  bookingStore.setService(bookingStore.barber.services[0]);
+                }}
               >
-                <ServiceCard
-                  onClick={() => {
-                    bookingStore.setService(bookingStore.barber.services[0]);
-                  }}
-                >
-                  <ServiceName>Advanced style scissor cut</ServiceName>
-                  <ServiceInfo>
-                    <Duration>
-                      1 hr and 30 min
-                    </Duration>
-                    <Price>$75</Price>
-                  </ServiceInfo>
-                </ServiceCard>
-              </ThemeProvider>
-            </CardGrid>
-          </ContentContainer>
+                <ServiceName>Advanced style scissor cut</ServiceName>
+                <ServiceInfo>
+                  <Duration>
+                    1 hr and 30 min
+                  </Duration>
+                  <Price>$75</Price>
+                </ServiceInfo>
+              </ServiceCard>
+            </ThemeProvider>
+          </CardGrid>
+        </ContentContainer>
 
-          {bookingStore.barber && bookingStore.service && (
-            <Order>
-              <Heading>Your order</Heading>
-              <OrderDetails>
-                <OrderLine>
-                  <OrderLineRow>
-                    <OrderLineBarber>{bookingStore.barber.firstName}</OrderLineBarber>
-                    <OrderLinePrice>
-                      $
-                      {bookingStore.service.price / 100}
-                    </OrderLinePrice>
-                  </OrderLineRow>
-                  <OrderLineDescription>
-                    {bookingStore.service.name}
-                  </OrderLineDescription>
-                </OrderLine>
-              </OrderDetails>
+        {bookingStore.barber && bookingStore.service && (
+        <Order>
+          <Heading>Your order</Heading>
+          <OrderDetails>
+            <OrderLine>
+              <OrderLineRow>
+                <OrderLineBarber>{bookingStore.barber.firstName}</OrderLineBarber>
+                <OrderLinePrice>
+                  $
+                  {bookingStore.service.price / 100}
+                </OrderLinePrice>
+              </OrderLineRow>
+              <OrderLineDescription>
+                {bookingStore.service.name}
+              </OrderLineDescription>
+            </OrderLine>
+          </OrderDetails>
 
-              <ChooseTimeButton>Choose a time</ChooseTimeButton>
-            </Order>
-          )}
-        </Section>
-      ) : null}
-    </Layout>
-  </>
+          <ChooseTimeButton>Choose a time</ChooseTimeButton>
+        </Order>
+        )}
+      </Section>
+    ) : null}
+  </AppLayout>
 ));
 
 export { App };
