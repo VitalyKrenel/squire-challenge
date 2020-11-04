@@ -1,5 +1,9 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
+import { observer } from 'mobx-react-lite';
+
 import bgImage from './BackgroundImage.jpg';
+import { bookingStore, STEP_CHOOSE_SERVICE, STEP_CHOOSE_BARBER } from './BookingStore';
+import { barbers } from '~/api/barbers';
 
 const BaseStyle = createGlobalStyle`
   html,
@@ -26,16 +30,23 @@ const BaseStyle = createGlobalStyle`
   }
 `;
 
+const getBackground = (hasBackgroundImage) => (hasBackgroundImage ? css`
+  background:
+    linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #f7f7f7 71.83%),
+    url(${bgImage}) center center no-repeat;
+  background-size: cover;
+` : css`
+  background: #f7f7f7;
+`);
+
 const Layout = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
   flex-direction: column;
   padding: 0 82px;
-  background:
-    linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #f7f7f7 71.83%),
-    url(${bgImage}) center center no-repeat;
-  background-size: cover;
+
+  ${({ hasBackgroundImage }) => getBackground(hasBackgroundImage)}
 `;
 
 const Header = styled.header`
@@ -100,28 +111,133 @@ const Action = styled.button`
   color: #fff;
 `;
 
-const App = () => (
+const CardGrid = styled.section`
+  display: grid;
+  gap: 26px;
+  grid-template-columns: repeat(3, 1fr);
+`;
+
+const Card = styled.div`
+  display: flex;
+  width: 230px;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+  border: 1px solid #c7c7cc;
+  border-radius: 16px;
+  transition: all 0.3s 0s ease-out;
+
+  &:hover {
+    border: 1px solid #e1e1e1;
+    background: #fff;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  }
+`;
+
+const BarberPhoto = styled.img`
+  width: 100px;
+  height: 100px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+`;
+
+const BarberName = styled.p`
+  margin: 0 0 8px;
+  color: #000;
+  font-family: SF Pro Display, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.55px;
+  line-height: 24px;
+  text-align: center;
+`;
+
+const AvailabilityStatus = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 24px;
+
+  &::after {
+    width: 40px;
+    height: 1px;
+    background-color: #d1d1d6;
+    content: '';
+  }
+`;
+
+const Status = styled.p`
+  margin: 0 0 24px;
+  color: rgba(60, 60, 67, 0.6);
+  font-family: SF Pro Text, sans-serif;
+  font-size: 15px;
+  line-height: 18px;
+  text-align: center;
+  text-transform: capitalize;
+`;
+
+const AboutBarberLink = styled.a`
+  color: #006bb2;
+  font-family: SF Pro Display, sans-serif;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 20px;
+  text-align: center;
+  text-decoration: none;
+`;
+
+const ContentContainer = styled.div`
+  padding-top: 70px;
+`;
+
+const App = observer(() => (
   <>
     <BaseStyle />
-    <Layout>
+    <Layout hasBackgroundImage={!bookingStore.currentStep}>
       <Header>
         <Logo href="/">Squire</Logo>
       </Header>
 
-      <Barbershop>
-        <Name>X-CUTZ Barbershop</Name>
-        <Address>
-          <AddressLine>4791  Lowndes Hill Park Road</AddressLine>
-          <AddressLine>Bakersfield, CA 93307</AddressLine>
-        </Address>
+      {!bookingStore.currentStep && (
+        <Barbershop>
+          <Name>X-CUTZ Barbershop</Name>
+          <Address>
+            <AddressLine>4791  Lowndes Hill Park Road</AddressLine>
+            <AddressLine>Bakersfield, CA 93307</AddressLine>
+          </Address>
 
-        <ActionsRow>
-          <Action>Choose a service</Action>
-          <Action>Choose a barber</Action>
-        </ActionsRow>
-      </Barbershop>
+          <ActionsRow>
+            <Action onClick={() => bookingStore.setStep(STEP_CHOOSE_SERVICE)}>
+              Choose a service
+            </Action>
+            <Action onClick={() => bookingStore.setStep(STEP_CHOOSE_BARBER)}>
+              Choose a barber
+            </Action>
+          </ActionsRow>
+        </Barbershop>
+      )}
+
+      {bookingStore.currentStep === STEP_CHOOSE_BARBER ? (
+        <ContentContainer>
+          <CardGrid>
+            <Card onClick={() => {
+              bookingStore.setBarber(barbers[0]);
+              bookingStore.toServiceStep();
+            }}
+            >
+              <BarberPhoto src="" />
+              <BarberName>Alex K.</BarberName>
+              <AvailabilityStatus>
+                <Status>Available today</Status>
+              </AvailabilityStatus>
+              <AboutBarberLink href="#">About Alex</AboutBarberLink>
+            </Card>
+          </CardGrid>
+        </ContentContainer>
+      ) : null}
     </Layout>
   </>
-);
+));
 
 export { App };
