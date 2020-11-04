@@ -189,10 +189,25 @@ const AboutBarberLink = styled.a`
   text-decoration: none;
 `;
 
-const ContentContainer = styled.div`
+const Section = styled.section`
   display: flex;
   align-items: flex-start;
   padding-top: 70px;
+`;
+
+const ContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ContentHeading = styled.p`
+  margin: 0 0 64px;
+  font-family: SF Pro Display, sans-serif;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 0.37px;
+  line-height: 41px;
 `;
 
 const serviceThemes = {
@@ -396,49 +411,55 @@ const App = observer(() => (
       )}
 
       {bookingStore.currentStep === STEP_CHOOSE_BARBER ? (
-        <ContentContainer>
-          <CardGrid>
-            <Card onClick={() => {
-              bookingStore.setBarber(barbers[0]);
-              bookingStore.toServiceStep();
-            }}
-            >
-              <BarberPhoto src="" />
-              <BarberName>Alex K.</BarberName>
-              <AvailabilityStatus>
-                <Status>Available today</Status>
-              </AvailabilityStatus>
-              <AboutBarberLink href="#">About Alex</AboutBarberLink>
-            </Card>
-          </CardGrid>
-        </ContentContainer>
+        <Section>
+          <ContentContainer>
+            <ContentHeading>Choose a professional</ContentHeading>
+            <CardGrid>
+              <Card onClick={() => {
+                bookingStore.setBarber(barbers[0]);
+                bookingStore.toServiceStep();
+              }}
+              >
+                <BarberPhoto src="" />
+                <BarberName>Alex K.</BarberName>
+                <AvailabilityStatus>
+                  <Status>Available today</Status>
+                </AvailabilityStatus>
+                <AboutBarberLink href="#">About Alex</AboutBarberLink>
+              </Card>
+            </CardGrid>
+          </ContentContainer>
+        </Section>
       ) : null}
 
       {bookingStore.currentStep === STEP_CHOOSE_SERVICE ? (
-        <ContentContainer>
-          <CardGrid>
-            <ThemeProvider
-              theme={
+        <Section>
+          <ContentContainer>
+            <ContentHeading>Choose a service</ContentHeading>
+            <CardGrid>
+              <ThemeProvider
+                theme={
                 bookingStore.service === bookingStore.barber?.services[0]
                   ? serviceThemes.selected
                   : serviceThemes.initial
               }
-            >
-              <ServiceCard
-                onClick={() => {
-                  bookingStore.setService(bookingStore.barber.services[0]);
-                }}
               >
-                <ServiceName>Advanced style scissor cut</ServiceName>
-                <ServiceInfo>
-                  <Duration>
-                    1 hr and 30 min
-                  </Duration>
-                  <Price>$75</Price>
-                </ServiceInfo>
-              </ServiceCard>
-            </ThemeProvider>
-          </CardGrid>
+                <ServiceCard
+                  onClick={() => {
+                    bookingStore.setService(bookingStore.barber.services[0]);
+                  }}
+                >
+                  <ServiceName>Advanced style scissor cut</ServiceName>
+                  <ServiceInfo>
+                    <Duration>
+                      1 hr and 30 min
+                    </Duration>
+                    <Price>$75</Price>
+                  </ServiceInfo>
+                </ServiceCard>
+              </ThemeProvider>
+            </CardGrid>
+          </ContentContainer>
 
           {bookingStore.barber && bookingStore.service && (
             <Order>
@@ -461,7 +482,7 @@ const App = observer(() => (
               <ChooseTimeButton>Choose a time</ChooseTimeButton>
             </Order>
           )}
-        </ContentContainer>
+        </Section>
       ) : null}
     </Layout>
   </>
