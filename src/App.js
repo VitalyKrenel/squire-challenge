@@ -3,8 +3,10 @@ import { observer } from 'mobx-react-lite';
 
 import { bookingStore, STEP_CHOOSE_SERVICE, STEP_CHOOSE_BARBER } from './BookingStore';
 import { barbers } from '~/api/barbers';
+import { services } from '~/api/services';
 import { AppLayout } from './AppLayout';
 import { Order } from './Order';
+import { OptionsGrid } from './OptionsGrid';
 
 const Barbershop = styled.div`
   display: flex;
@@ -48,12 +50,6 @@ const Action = styled.button`
   background-color: #000;
   border-radius: 8px;
   color: #fff;
-`;
-
-const CardGrid = styled.section`
-  display: grid;
-  gap: 26px;
-  grid-template-columns: repeat(3, 1fr);
 `;
 
 const Card = styled.div`
@@ -132,23 +128,8 @@ const Section = styled.section`
   padding-top: 70px;
 `;
 
-const ContentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ContentHeading = styled.p`
-  margin: 0 0 64px;
-  font-family: SF Pro Display, sans-serif;
-  font-size: 34px;
-  font-style: normal;
-  font-weight: bold;
-  letter-spacing: 0.37px;
-  line-height: 41px;
-`;
-
 const serviceThemes = {
-  initial: {
+  default: {
     durationTextColor: 'rgba(60, 60, 67, 0.6)',
   },
   selected: {
@@ -200,7 +181,7 @@ const Duration = styled.p`
   line-height: 22px;
 `;
 
-const Price = styled.p`
+const ServicePrice = styled.p`
   margin: 0;
   font-family: SF Pro Display, sans-serif;
   font-size: 15px;
@@ -232,23 +213,31 @@ const App = observer(() => (
 
     {bookingStore.currentStep === STEP_CHOOSE_BARBER ? (
       <Section>
-        <ContentContainer>
-          <ContentHeading>Choose a professional</ContentHeading>
-          <CardGrid>
-            <Card onClick={() => {
-              bookingStore.setBarber(barbers[0]);
-              bookingStore.toServiceStep();
-            }}
+        <OptionsGrid heading="Choose a barber" collection={barbers}>
+          {(barber) => (
+            <Card
+              onClick={() => {
+                bookingStore.setBarber(barber);
+                bookingStore.toServiceStep();
+              }}
             >
-              <BarberPhoto src="" />
-              <BarberName>Alex K.</BarberName>
+              <BarberPhoto src={barber.photo} />
+              <BarberName>
+                {barber.firstName}
+                {' '}
+                {barber.lastName[0].concat('.')}
+              </BarberName>
               <AvailabilityStatus>
                 <Status>Available today</Status>
               </AvailabilityStatus>
-              <AboutBarberLink href="#">About Alex</AboutBarberLink>
+              <AboutBarberLink href="#">
+                About
+                {' '}
+                {barber.firstName}
+              </AboutBarberLink>
             </Card>
-          </CardGrid>
-        </ContentContainer>
+          )}
+        </OptionsGrid>
 
         {bookingStore.barber && bookingStore.service && (
           <Order service={bookingStore.service} barber={bookingStore.barber} />
@@ -258,32 +247,35 @@ const App = observer(() => (
 
     {bookingStore.currentStep === STEP_CHOOSE_SERVICE ? (
       <Section>
-        <ContentContainer>
-          <ContentHeading>Choose a service</ContentHeading>
-          <CardGrid>
+        <OptionsGrid heading="Choose a service" collection={bookingStore.barber?.services[0] || services}>
+          {(service) => (
             <ThemeProvider
               theme={
                 bookingStore.service === bookingStore.barber?.services[0]
                   ? serviceThemes.selected
-                  : serviceThemes.initial
+                  : serviceThemes.default
               }
             >
               <ServiceCard
                 onClick={() => {
-                  bookingStore.setService(bookingStore.barber.services[0]);
+                  bookingStore.setService(service);
+                  bookingStore.toBarberStep();
                 }}
               >
-                <ServiceName>Advanced style scissor cut</ServiceName>
+                <ServiceName>{service.name}</ServiceName>
                 <ServiceInfo>
                   <Duration>
                     1 hr and 30 min
                   </Duration>
-                  <Price>$75</Price>
+                  <ServicePrice>
+                    $
+                    {service.price / 100}
+                  </ServicePrice>
                 </ServiceInfo>
               </ServiceCard>
             </ThemeProvider>
-          </CardGrid>
-        </ContentContainer>
+          )}
+        </OptionsGrid>
 
         {bookingStore.barber && bookingStore.service && (
           <Order service={bookingStore.service} barber={bookingStore.barber} />
