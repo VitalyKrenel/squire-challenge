@@ -27,7 +27,13 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'lines-between-class-members': 'off',
     'import/no-default-export': 'warn',
-    'react/prop-types': ['warn', { ignore: ['children'] }],
+    /*
+      'children' is hard to define using PropTypes,
+      'className' providing PropType for className
+        does not clarify component's contract as this prop
+        is mostly used for Styled Components
+    */
+    'react/prop-types': ['warn', { ignore: ['children', 'className'] }],
     'react/require-default-props': 'off',
   },
 };

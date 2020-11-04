@@ -1,4 +1,4 @@
-import styled, { css, ThemeProvider } from 'styled-components';
+import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 
 import { bookingStore, STEP_CHOOSE_SERVICE, STEP_CHOOSE_BARBER } from './BookingStore';
@@ -7,6 +7,7 @@ import { services } from '~/api/services';
 import { AppLayout } from './AppLayout';
 import { Order } from './Order';
 import { OptionsGrid } from './OptionsGrid';
+import { SelectableCard } from './SelectableCard';
 
 const Barbershop = styled.div`
   display: flex;
@@ -52,23 +53,6 @@ const Action = styled.button`
   color: #fff;
 `;
 
-const Card = styled.div`
-  display: flex;
-  width: 230px;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 0;
-  border: 1px solid #c7c7cc;
-  border-radius: 16px;
-  transition: all 0.3s 0s ease-out;
-
-  &:hover {
-    border: 1px solid #e1e1e1;
-    background: #fff;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-  }
-`;
-
 const BarberPhoto = styled.img`
   width: 100px;
   height: 100px;
@@ -78,7 +62,6 @@ const BarberPhoto = styled.img`
 
 const BarberName = styled.p`
   margin: 0 0 8px;
-  color: #000;
   font-family: SF Pro Display, sans-serif;
   font-size: 20px;
   font-weight: 600;
@@ -103,7 +86,7 @@ const AvailabilityStatus = styled.div`
 
 const Status = styled.p`
   margin: 0 0 24px;
-  color: rgba(60, 60, 67, 0.6);
+  color: ${({ isSelected }) => isSelected && 'rgba(60, 60, 67, 0.6'};
   font-family: SF Pro Text, sans-serif;
   font-size: 15px;
   line-height: 18px;
@@ -128,33 +111,11 @@ const Section = styled.section`
   padding-top: 70px;
 `;
 
-const serviceThemes = {
-  default: {
-    durationTextColor: 'rgba(60, 60, 67, 0.6)',
-  },
-  selected: {
-    cardBackgroundColor: '#161616',
-    cardTextColor: '#ffffff',
-    durationColor: '#ffffff',
-  },
-};
-
-const ServiceCard = styled(Card)`
+const ServiceCard = styled(SelectableCard)`
   min-height: 134px;
   align-items: flex-start;
   padding: 24px;
   transition: all 0.2s 0s ease-in-out;
-
-  ${({ theme }) => theme.cardBackgroundColor && css`
-    /* stylelint-disable */
-    background-color: ${theme.cardBackgroundColor};
-    color: ${theme.cardTextColor};
-
-    &:hover {
-      background-color: ${theme.cardBackgroundColor};
-      box-shadow: none;
-    }
-  `}
 `;
 
 const ServiceName = styled.p`
@@ -175,7 +136,7 @@ const ServiceInfo = styled.div`
 
 const Duration = styled.p`
   margin: 0;
-  color: ${({ theme }) => theme.durationTextColor};
+  color: ${({ isSelected }) => isSelected && 'rgba(60, 60, 67, 0.6)'};
   font-family: SF Pro Text, sans-serif;
   font-size: 15px;
   line-height: 22px;
@@ -215,7 +176,8 @@ const App = observer(() => (
       <Section>
         <OptionsGrid heading="Choose a barber" collection={barbers}>
           {(barber) => (
-            <Card
+            <SelectableCard
+              isSelected={bookingStore.barber?.id === barber.id}
               onClick={() => {
                 bookingStore.setBarber(barber);
                 bookingStore.toServiceStep();
@@ -235,7 +197,7 @@ const App = observer(() => (
                 {' '}
                 {barber.firstName}
               </AboutBarberLink>
-            </Card>
+            </SelectableCard>
           )}
         </OptionsGrid>
 
@@ -249,31 +211,24 @@ const App = observer(() => (
       <Section>
         <OptionsGrid heading="Choose a service" collection={bookingStore.barber?.services[0] || services}>
           {(service) => (
-            <ThemeProvider
-              theme={
-                bookingStore.service === bookingStore.barber?.services[0]
-                  ? serviceThemes.selected
-                  : serviceThemes.default
-              }
+            <ServiceCard
+              isSelected={bookingStore.service?.id === service.id}
+              onClick={() => {
+                bookingStore.setService(service);
+                bookingStore.toBarberStep();
+              }}
             >
-              <ServiceCard
-                onClick={() => {
-                  bookingStore.setService(service);
-                  bookingStore.toBarberStep();
-                }}
-              >
-                <ServiceName>{service.name}</ServiceName>
-                <ServiceInfo>
-                  <Duration>
-                    1 hr and 30 min
-                  </Duration>
-                  <ServicePrice>
-                    $
-                    {service.price / 100}
-                  </ServicePrice>
-                </ServiceInfo>
-              </ServiceCard>
-            </ThemeProvider>
+              <ServiceName>{service.name}</ServiceName>
+              <ServiceInfo>
+                <Duration isSelected={bookingStore.service?.id === service.id}>
+                  1 hr and 30 min
+                </Duration>
+                <ServicePrice>
+                  $
+                  {service.price / 100}
+                </ServicePrice>
+              </ServiceInfo>
+            </ServiceCard>
           )}
         </OptionsGrid>
 
