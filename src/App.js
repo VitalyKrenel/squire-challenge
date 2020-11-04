@@ -160,6 +160,7 @@ const serviceThemes = {
 
 const ServiceCard = styled(Card)`
   min-height: 134px;
+  align-items: flex-start;
   padding: 24px;
   transition: all 0.2s 0s ease-in-out;
 
@@ -188,6 +189,7 @@ const ServiceInfo = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
+  margin-top: auto;
 `;
 
 const Duration = styled.p`
