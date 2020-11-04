@@ -15,6 +15,9 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
+  settings: {
+    'import/resolver': 'parcel',
+  },
   plugins: [
     'react',
   ],
