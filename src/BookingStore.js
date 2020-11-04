@@ -20,6 +20,10 @@ const BookingStore = class {
     this.barber = barber;
   }
 
+  setService(service) {
+    this.service = service;
+  }
+
   toServiceStep() {
     this.setStep(STEP_CHOOSE_SERVICE);
   }

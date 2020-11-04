@@ -191,6 +191,65 @@ const ContentContainer = styled.div`
   padding-top: 70px;
 `;
 
+const serviceThemes = {
+  default: {
+    durationColor: 'rgba(60, 60, 67, 0.6)',
+  },
+  selected: {
+    cardBackgroundColor: '#161616',
+    cardTextColor: '#ffffff',
+    durationColor: '#ffffff',
+  },
+};
+
+const ServiceCard = styled(Card)`
+  min-height: 134px;
+  padding: 24px;
+  transition: all 0.2s 0s ease-in-out;
+
+  ${({ theme }) => theme.cardBackgroundColor && css`
+    background-color: ${theme.cardBackgroundColor};
+    color: ${theme.cardTextColor};
+
+    &:hover {
+      background-color: ${theme.cardBackgroundColor};
+      box-shadow: none;
+    }
+  `}
+`;
+
+const ServiceName = styled.p`
+  margin: 0 0 20px;
+  font-family: SF Pro Text, sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 22px;
+`;
+
+const ServiceInfo = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Duration = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.durationcolor};
+  font-family: SF Pro Text, sans-serif;
+  font-size: 15px;
+  line-height: 22px;
+`;
+
+const Price = styled.p`
+  margin: 0;
+  font-family: SF Pro Display, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 18px;
+  text-align: right;
+`;
+
 const App = observer(() => (
   <>
     <BaseStyle />
@@ -233,6 +292,29 @@ const App = observer(() => (
               </AvailabilityStatus>
               <AboutBarberLink href="#">About Alex</AboutBarberLink>
             </Card>
+          </CardGrid>
+        </ContentContainer>
+      ) : null}
+
+      {bookingStore.currentStep === STEP_CHOOSE_SERVICE ? (
+        <ContentContainer>
+          <CardGrid>
+            <ServiceCard
+              onClick={() => {
+                bookingStore.setService(bookingStore.barber.services[0]);
+              }}
+              theme={
+                bookingStore.service === bookingStore.barber?.services[0]
+                  ? serviceThemes.selected
+                  : serviceThemes.default
+              }
+            >
+              <ServiceName>Advanced style scissor cut</ServiceName>
+              <ServiceInfo>
+                <Duration theme={serviceThemes.selected}>1 hr and 30 min</Duration>
+                <Price>$75</Price>
+              </ServiceInfo>
+            </ServiceCard>
           </CardGrid>
         </ContentContainer>
       ) : null}
