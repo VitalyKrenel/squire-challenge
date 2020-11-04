@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { bookingStore, STEP_CHOOSE_SERVICE, STEP_CHOOSE_BARBER } from './BookingStore';
 import { barbers } from '~/api/barbers';
 import { AppLayout } from './AppLayout';
+import { Order } from './Order';
 
 const Barbershop = styled.div`
   display: flex;
@@ -163,6 +164,7 @@ const ServiceCard = styled(Card)`
   transition: all 0.2s 0s ease-in-out;
 
   ${({ theme }) => theme.cardBackgroundColor && css`
+    /* stylelint-disable */
     background-color: ${theme.cardBackgroundColor};
     color: ${theme.cardTextColor};
 
@@ -205,139 +207,25 @@ const Price = styled.p`
   text-align: right;
 `;
 
-const Order = styled.div`
-  display: flex;
-  width: 412px;
-  min-height: 660px;
-  flex-direction: column;
-  padding: 40px 32px;
-  border: 1px solid #e1e1e1;
-  margin-left: auto;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-`;
-
-const Heading = styled.p`
-  margin: 0 0 32px;
-  font-family: SF Pro Display, sans-serif;
-  font-size: 28px;
-  font-style: normal;
-  font-weight: bold;
-  line-height: 33px;
-`;
-
-const OrderDetails = styled.ul`
-  padding: 0;
-  margin: 0;
-  counter-reset: order-line;
-  list-style: none;
-`;
-
-const OrderLine = styled.li`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-
-  &::before {
-    position: absolute;
-
-    /* Visually align circle with barber's name */
-    top: 2px;
-    left: 0;
-    display: flex;
-    width: 20px;
-    height: 20px;
-    align-items: center;
-    justify-content: center;
-
-    /* Visually align number with barber's name */
-    padding: 2px 0 0;
-    background-color: #000;
-    border-radius: 50%;
-    color: #fff;
-    content: counter(order-line);
-    counter-increment: order-line;
-    font-family: SF Pro Display, sans-serif;
-    font-size: 13px;
-    font-weight: bold;
-    line-height: 16px;
-  }
-`;
-
-const OrderLineRow = styled.div`
-  display: flex;
-  margin-bottom: 16px;
-`;
-
-const OrderLineBarber = styled(BarberName)`
-  margin: 0 0 0 32px;
-`;
-
-const OrderLinePrice = styled(Price)`
-  margin: 0 0 0 auto;
-  font-size: 20px;
-  line-height: 24px;
-`;
-
-const OrderLineDescription = styled.p`
-  margin: 0;
-  color: #3c3c43;
-  font-family: SF Pro Text, sans-serif;
-  font-size: 17px;
-  line-height: 22px;
-`;
-
-const ChooseTimeButton = styled.button`
-  width: 100%;
-  height: 48px;
-  border: none;
-  margin-top: auto;
-  background: #000;
-  border-radius: 8px;
-  color: #fff;
-  font-family: SF Pro Text, sans-serif;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 18px;
-  transition:
-    all 0.2s 0s ease-out,
-    height 0.1s 0s ease-in;
-
-  &:hover,
-  &:focus {
-    border: 1px solid #000;
-    background: #fff;
-    color: #000;
-    outline: none;
-  }
-
-  &:active {
-    height: 44px;
-  }
-`;
-
 const App = observer(() => (
-  <AppLayout>
+  <AppLayout hasBackgroundImage={!bookingStore.currentStep}>
     {!bookingStore.currentStep && (
-    <Barbershop>
-      <BarbershopName>X-CUTZ Barbershop</BarbershopName>
-      <Address>
-        <AddressLine>4791  Lowndes Hill Park Road</AddressLine>
-        <AddressLine>Bakersfield, CA 93307</AddressLine>
-      </Address>
+      <Barbershop>
+        <BarbershopName>X-CUTZ Barbershop</BarbershopName>
+        <Address>
+          <AddressLine>4791  Lowndes Hill Park Road</AddressLine>
+          <AddressLine>Bakersfield, CA 93307</AddressLine>
+        </Address>
 
-      <ActionsRow>
-        <Action onClick={() => bookingStore.setStep(STEP_CHOOSE_SERVICE)}>
-          Choose a service
-        </Action>
-        <Action onClick={() => bookingStore.setStep(STEP_CHOOSE_BARBER)}>
-          Choose a barber
-        </Action>
-      </ActionsRow>
-    </Barbershop>
+        <ActionsRow>
+          <Action onClick={() => bookingStore.setStep(STEP_CHOOSE_SERVICE)}>
+            Choose a service
+          </Action>
+          <Action onClick={() => bookingStore.setStep(STEP_CHOOSE_BARBER)}>
+            Choose a barber
+          </Action>
+        </ActionsRow>
+      </Barbershop>
     )}
 
     {bookingStore.currentStep === STEP_CHOOSE_BARBER ? (
@@ -359,6 +247,10 @@ const App = observer(() => (
             </Card>
           </CardGrid>
         </ContentContainer>
+
+        {bookingStore.barber && bookingStore.service && (
+          <Order service={bookingStore.service} barber={bookingStore.barber} />
+        )}
       </Section>
     ) : null}
 
@@ -392,25 +284,7 @@ const App = observer(() => (
         </ContentContainer>
 
         {bookingStore.barber && bookingStore.service && (
-        <Order>
-          <Heading>Your order</Heading>
-          <OrderDetails>
-            <OrderLine>
-              <OrderLineRow>
-                <OrderLineBarber>{bookingStore.barber.firstName}</OrderLineBarber>
-                <OrderLinePrice>
-                  $
-                  {bookingStore.service.price / 100}
-                </OrderLinePrice>
-              </OrderLineRow>
-              <OrderLineDescription>
-                {bookingStore.service.name}
-              </OrderLineDescription>
-            </OrderLine>
-          </OrderDetails>
-
-          <ChooseTimeButton>Choose a time</ChooseTimeButton>
-        </Order>
+          <Order service={bookingStore.service} barber={bookingStore.barber} />
         )}
       </Section>
     ) : null}
