@@ -1,7 +1,10 @@
+import 'regenerator-runtime/runtime';
+
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 
 import { bookingStore, STEP_CHOOSE_SERVICE, STEP_CHOOSE_BARBER } from './BookingStore';
+
 import { barbers } from '~/api/barbers';
 import { services } from '~/api/services';
 import { AppLayout } from './AppLayout';
