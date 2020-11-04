@@ -8,13 +8,12 @@ import { barbers } from '~/api/barbers';
 const BaseStyle = createGlobalStyle`
   html,
   body {
-    width: 100%;
-    height: 100%;
     padding: 0;
     margin: 0;
   }
 
   html {
+    width: 100%;
     box-sizing: border-box;
   }
 
@@ -22,6 +21,10 @@ const BaseStyle = createGlobalStyle`
   *::after,
   *::before {
     box-sizing: inherit;
+  }
+
+  body {
+    min-height: 100%;
   }
 
   #react-root {
@@ -248,6 +251,34 @@ const Price = styled.p`
   font-weight: 600;
   line-height: 18px;
   text-align: right;
+`;
+
+const Order = styled.div`
+  width: 412px;
+  min-height: 760px;
+  padding: 40px 32px;
+  border: 1px solid #e1e1e1;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+`;
+
+const Heading = styled.p`
+  margin: 0 0 32px;
+`;
+
+const OrderDetails = styled.ul`
+  padding: 0;
+  margin: 0;
+  list-style: none;
+`;
+
+const OrderItem = styled.li`
+  margin: 0;
+
+  &::before {
+    content: '';
+  }
 `;
 
 const App = observer(() => (
