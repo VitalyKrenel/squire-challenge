@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle, css } from 'styled-components';
+import styled, { createGlobalStyle, css, ThemeProvider } from 'styled-components';
 import { observer } from 'mobx-react-lite';
 
 import bgImage from './BackgroundImage.jpg';
@@ -195,8 +195,8 @@ const ContentContainer = styled.div`
 `;
 
 const serviceThemes = {
-  default: {
-    durationColor: 'rgba(60, 60, 67, 0.6)',
+  initial: {
+    durationTextColor: 'rgba(60, 60, 67, 0.6)',
   },
   selected: {
     cardBackgroundColor: '#161616',
@@ -238,7 +238,7 @@ const ServiceInfo = styled.div`
 
 const Duration = styled.p`
   margin: 0;
-  color: ${({ theme }) => theme.durationcolor};
+  color: ${({ theme }) => theme.durationTextColor};
   font-family: SF Pro Text, sans-serif;
   font-size: 15px;
   line-height: 22px;
@@ -330,22 +330,27 @@ const App = observer(() => (
       {bookingStore.currentStep === STEP_CHOOSE_SERVICE ? (
         <ContentContainer>
           <CardGrid>
-            <ServiceCard
-              onClick={() => {
-                bookingStore.setService(bookingStore.barber.services[0]);
-              }}
+            <ThemeProvider
               theme={
                 bookingStore.service === bookingStore.barber?.services[0]
                   ? serviceThemes.selected
-                  : serviceThemes.default
+                  : serviceThemes.initial
               }
             >
-              <ServiceName>Advanced style scissor cut</ServiceName>
-              <ServiceInfo>
-                <Duration theme={serviceThemes.selected}>1 hr and 30 min</Duration>
-                <Price>$75</Price>
-              </ServiceInfo>
-            </ServiceCard>
+              <ServiceCard
+                onClick={() => {
+                  bookingStore.setService(bookingStore.barber.services[0]);
+                }}
+              >
+                <ServiceName>Advanced style scissor cut</ServiceName>
+                <ServiceInfo>
+                  <Duration>
+                    1 hr and 30 min
+                  </Duration>
+                  <Price>$75</Price>
+                </ServiceInfo>
+              </ServiceCard>
+            </ThemeProvider>
           </CardGrid>
         </ContentContainer>
       ) : null}
