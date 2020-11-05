@@ -24,6 +24,7 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': 'off',
+    'react/jsx-indent': [2, 2, { indentLogicalExpressions: true }],
     'import/prefer-default-export': 'off',
     'lines-between-class-members': 'off',
     'import/no-default-export': 'warn',
