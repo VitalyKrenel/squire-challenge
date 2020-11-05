@@ -18,7 +18,7 @@ const BarbershopName = styled.p`
   color: #000;
   font-family: SF Pro Display, sans-serif;
   font-size: 48px;
-  font-weight: bold;
+  font-weight: 700;
   line-height: 57px;
 `;
 

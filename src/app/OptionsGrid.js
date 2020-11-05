@@ -12,7 +12,7 @@ const Heading = styled.p`
   font-family: SF Pro Display, sans-serif;
   font-size: 34px;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 700;
   letter-spacing: 0.37px;
   line-height: 41px;
 `;

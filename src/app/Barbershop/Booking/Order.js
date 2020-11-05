@@ -45,8 +45,7 @@ const Heading = styled.p`
   margin: 0 0 32px;
   font-family: SF Pro Display, sans-serif;
   font-size: 28px;
-  font-style: normal;
-  font-weight: bold;
+  font-weight: 700;
   line-height: 33px;
 `;
 
@@ -84,7 +83,7 @@ const OrderLine = styled.li`
     counter-increment: order-line;
     font-family: SF Pro Display, sans-serif;
     font-size: 13px;
-    font-weight: bold;
+    font-weight: 700;
     line-height: 16px;
   }
 `;

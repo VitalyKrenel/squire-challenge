@@ -48,8 +48,6 @@ const AboutBarberLink = styled.a`
   color: #006bb2;
   font-family: SF Pro Display, sans-serif;
   font-size: 17px;
-  font-style: normal;
-  font-weight: normal;
   line-height: 20px;
   text-align: center;
   text-decoration: none;

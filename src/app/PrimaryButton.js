@@ -13,7 +13,6 @@ const PrimaryButton = styled.button`
   color: #fff;
   font-family: SF Pro Text, sans-serif;
   font-size: 15px;
-  font-style: normal;
   font-weight: 600;
   line-height: 18px;
   transition:
