@@ -10,6 +10,7 @@ const SelectableCardLayout = styled.div`
   border: 1px solid #c7c7cc;
   border-radius: 16px;
   color: #000;
+  cursor: pointer;
   transition: all 0.3s 0s ease-out;
 
   /* stylelint-disable indentation */

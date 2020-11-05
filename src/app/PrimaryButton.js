@@ -6,7 +6,7 @@ const PrimaryButton = styled.button`
   height: 48px;
   align-items: center;
   border: none;
-  border: 3px solid transparent;
+  border: 1px solid transparent;
   margin-top: auto;
   background: #000;
   border-radius: 8px;
@@ -21,12 +21,12 @@ const PrimaryButton = styled.button`
     height 0.1s 0s ease-in;
 
   &:focus {
-    border: 3px solid #007fff;
+    box-shadow: 0 0 0 3px #007fff;
     outline: none;
   }
 
   &:hover {
-    border: 3px solid #000;
+    border: 1px solid #000;
     background: transparent;
     color: #000;
   }
