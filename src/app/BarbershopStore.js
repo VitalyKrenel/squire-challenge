@@ -1,6 +1,6 @@
 import { makeAutoObservable, flow } from 'mobx';
 
-import { barbershopApi } from '~/src/api/barbershopApi';
+import { barbershopApi } from '~/src/app/api/barbershopApi';
 
 const IDLE = 'idle';
 const LOADING = 'loading';
