@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { observer } from 'mobx-react-lite';
 
 const OptionsLayout = styled.div`
   display: flex;
@@ -22,14 +23,14 @@ const Grid = styled.section`
   grid-template-columns: repeat(3, 1fr);
 `;
 
-const OptionsGrid = ({ heading, collection, children }) => (
+const OptionsGrid = observer(({ heading, collection, children }) => (
   <OptionsLayout>
     <Heading>{heading}</Heading>
     <Grid>
       {collection.map((item) => children(item))}
     </Grid>
   </OptionsLayout>
-);
+));
 
 OptionsGrid.propTypes = {
   heading: PropTypes.string.isRequired,

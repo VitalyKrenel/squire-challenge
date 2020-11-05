@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { observer } from 'mobx-react-lite';
 import { SelectableCard } from './SelectableCard';
 
 const ServiceCard = styled(SelectableCard)`
@@ -43,7 +44,7 @@ const ServicePrice = styled.p`
   text-align: right;
 `;
 
-const ServiceOption = ({ service, isSelected, onClick }) => (
+const ServiceOption = observer(({ service, isSelected, onClick }) => (
   <ServiceCard
     isSelected={isSelected}
     onClick={onClick}
@@ -59,7 +60,7 @@ const ServiceOption = ({ service, isSelected, onClick }) => (
       </ServicePrice>
     </ServiceInfo>
   </ServiceCard>
-);
+));
 
 ServiceOption.propTypes = {
   service: PropTypes.shape({

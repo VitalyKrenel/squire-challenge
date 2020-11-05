@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 
 import { bookingStore } from './BookingStore';
+import { barbershopStore } from './BarbershopStore';
 
 const Barbershop = styled.div`
   display: flex;
@@ -56,10 +57,20 @@ const BarbershopHero = observer(() => (
     </Address>
 
     <ActionsRow>
-      <Action onClick={() => bookingStore.toServiceStep()}>
+      <Action
+        onClick={async () => {
+          await barbershopStore.fetchServices();
+          bookingStore.toServiceStep();
+        }}
+      >
         Choose a service
       </Action>
-      <Action onClick={() => bookingStore.toBarberStep()}>
+      <Action
+        onClick={async () => {
+          await barbershopStore.fetchBarbers();
+          bookingStore.toBarberStep();
+        }}
+      >
         Choose a barber
       </Action>
     </ActionsRow>
