@@ -1,39 +1,9 @@
-import styled, { createGlobalStyle, css } from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import TopBarProgress from 'react-topbar-progress-indicator';
 import { observer } from 'mobx-react-lite';
 
 import bgImage from './BackgroundImage.jpg';
-
-const BaseStyle = createGlobalStyle`
-  html,
-  body {
-    padding: 0;
-    margin: 0;
-  }
-
-  html {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-  }
-
-  *,
-  *::after,
-  *::before {
-    box-sizing: inherit;
-  }
-
-  body {
-    min-height: 100%;
-  }
-
-  #react-root {
-    width: 100%;
-    min-height: 100vh;
-    background: #f7f7f7;
-  }
-`;
 
 const Layout = styled.div`
   display: flex;
@@ -78,16 +48,13 @@ TopBarProgress.config({
 });
 
 const BarbershopPageLayout = observer(({ hasBackgroundImage, isLoading, children }) => (
-  <>
-    <BaseStyle />
-    <Layout hasBackgroundImage={hasBackgroundImage}>
-      {isLoading && <TopBarProgress />}
-      <Header>
-        <Logo href="/">Squire</Logo>
-      </Header>
-      {children}
-    </Layout>
-  </>
+  <Layout hasBackgroundImage={hasBackgroundImage}>
+    {isLoading && <TopBarProgress />}
+    <Header>
+      <Logo href="/">Squire</Logo>
+    </Header>
+    {children}
+  </Layout>
 ));
 
 BarbershopPageLayout.propTypes = {
