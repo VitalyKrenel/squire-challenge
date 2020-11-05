@@ -1,5 +1,7 @@
 import { makeAutoObservable, flow } from 'mobx';
 
+import { barbershopApi } from '~/src/api/barbershopApi';
+
 const IDLE = 'idle';
 const LOADING = 'loading';
 
@@ -32,10 +34,7 @@ const BarbershopStore = class {
     this.startLoading();
 
     try {
-      const response = yield fetch('/api/barbers/');
-      const barbers = yield response.json();
-
-      this.barbers = barbers;
+      this.barbers = yield barbershopApi.fetchBarbers();
     } catch (e) {
       console.error(e);
     }
@@ -51,10 +50,7 @@ const BarbershopStore = class {
     this.startLoading();
 
     try {
-      const response = yield fetch('/api/services/');
-      const services = yield response.json();
-
-      this.services = services;
+      this.services = yield barbershopApi.fetchServices();
     } catch (e) {
       console.error(e);
     }
