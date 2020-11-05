@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import PropTypes from 'prop-types';
+import { PrimaryButton } from '../../PrimaryButton';
 
 /* TODO: Decide whether I need to re-use existent classes instead
          of duplicating this CSS code */
@@ -111,34 +112,8 @@ const Description = styled.p`
   line-height: 22px;
 `;
 
-const ChooseTimeButton = styled.button`
+const ChooseTimeButton = styled(PrimaryButton)`
   width: 100%;
-  height: 48px;
-  border: none;
-  margin-top: auto;
-  background: #000;
-  border-radius: 8px;
-  color: #fff;
-  font-family: SF Pro Text, sans-serif;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 18px;
-  transition:
-    all 0.2s 0s ease-out,
-    height 0.1s 0s ease-in;
-
-  &:hover,
-  &:focus {
-    border: 1px solid #000;
-    background: #fff;
-    color: #000;
-    outline: none;
-  }
-
-  &:active {
-    height: 44px;
-  }
 `;
 
 const Order = observer(({ barber, service }) => (

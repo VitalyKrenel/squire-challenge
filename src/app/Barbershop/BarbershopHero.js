@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 import { bookingStore } from './Booking/BookingStore';
 import { barbershopStore } from './BarbershopStore';
+import { PrimaryButton } from '~/src/app/PrimaryButton';
 
 const Barbershop = styled.div`
   display: flex;
@@ -39,13 +40,10 @@ const ActionsRow = styled.div`
   margin-left: -24px;
 `;
 
-const Action = styled.button`
+const Action = styled(PrimaryButton)`
+  width: auto;
   padding: 16px 32px;
-  border: none;
   margin-left: 24px;
-  background-color: #000;
-  border-radius: 8px;
-  color: #fff;
 `;
 
 const BarbershopHero = observer(() => (
