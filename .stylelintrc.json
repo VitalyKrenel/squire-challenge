@@ -5,6 +5,7 @@
   ],
   "rules": {
     "value-keyword-case": null,
+    "no-duplicate-selectors": null,
     "indentation": [2, { "baseIndentLevel": 1 }]
   }
 }
