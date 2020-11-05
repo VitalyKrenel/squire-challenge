@@ -20,6 +20,10 @@ const BarbershopStore = class {
     this.state = IDLE;
   }
 
+  get isLoading() {
+    return this.state === LOADING;
+  }
+
   fetchBarbers = flow(function* fetchBarbers() {
     if (this.barbers.length) {
       return;

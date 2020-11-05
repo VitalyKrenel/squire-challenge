@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime';
 
+import React from 'react';
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 
@@ -20,7 +21,10 @@ const Section = styled.section`
 `;
 
 const App = observer(() => (
-  <AppLayout hasBackgroundImage={!bookingStore.currentStep}>
+  <AppLayout
+    hasBackgroundImage={!bookingStore.currentStep}
+    isLoading={barbershopStore.isLoading}
+  >
     {bookingStore.currentStep === null ? (
       <BarbershopHero />
     ) : (

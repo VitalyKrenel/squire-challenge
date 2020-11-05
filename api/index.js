@@ -8,6 +8,7 @@ import { services } from './services';
 new Server({
   routes() {
     this.namespace = 'api';
+    this.timing = 1500;
 
     this.get('/barbers/', () => barbers);
     this.get('/services/', () => services);

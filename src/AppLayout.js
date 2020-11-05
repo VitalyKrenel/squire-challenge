@@ -1,5 +1,7 @@
 import styled, { createGlobalStyle, css } from 'styled-components';
 import PropTypes from 'prop-types';
+import TopBarProgress from 'react-topbar-progress-indicator';
+import { observer } from 'mobx-react-lite';
 
 import bgImage from './BackgroundImage.jpg';
 
@@ -67,20 +69,33 @@ const Logo = styled.a`
   text-decoration: none;
 `;
 
-const AppLayout = ({ hasBackgroundImage, children }) => (
+TopBarProgress.config({
+  barColors: {
+    0: '#000',
+    '1.0': '#000',
+  },
+});
+
+const AppLayout = observer(({ hasBackgroundImage, isLoading, children }) => (
   <>
     <BaseStyle />
     <Layout hasBackgroundImage={hasBackgroundImage}>
+      {isLoading && <TopBarProgress />}
       <Header>
         <Logo href="/">Squire</Logo>
       </Header>
       {children}
     </Layout>
   </>
-);
+));
 
 AppLayout.propTypes = {
   hasBackgroundImage: PropTypes.bool,
+  isLoading: PropTypes.bool,
+};
+
+AppLayout.defaultProps = {
+  isLoading: false,
 };
 
 export { AppLayout };
