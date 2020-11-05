@@ -114,6 +114,7 @@ const Description = styled.p`
 
 const ChooseTimeButton = styled(PrimaryButton)`
   width: 100%;
+  justify-content: center;
 `;
 
 const Order = observer(({ barber, service }) => (

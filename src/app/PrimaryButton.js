@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
 const PrimaryButton = styled.button`
+  display: flex;
   width: 100%;
   height: 48px;
+  align-items: center;
   border: none;
-  border: 1px solid transparent;
+  border: 3px solid transparent;
   margin-top: auto;
   background: #000;
   border-radius: 8px;
@@ -18,12 +20,15 @@ const PrimaryButton = styled.button`
     all 0.2s 0s ease-out,
     height 0.1s 0s ease-in;
 
-  &:hover,
   &:focus {
-    border: 1px solid #000;
+    border: 3px solid #007fff;
+    outline: none;
+  }
+
+  &:hover {
+    border: 3px solid #000;
     background: transparent;
     color: #000;
-    outline: none;
   }
 
   &:active {
