@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { observer } from 'mobx-react-lite';
-import { SelectableCard } from './SelectableCard';
+import { SelectableCard } from '~/src/app/SelectableCard';
 
 const ServiceCard = styled(SelectableCard)`
   min-height: 134px;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { SelectableCard } from './SelectableCard';
+import { SelectableCard } from '~/src/app/SelectableCard';
 
 const BarberPhoto = styled.img`
   width: 100px;

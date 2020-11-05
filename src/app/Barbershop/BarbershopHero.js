@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 
-import { bookingStore } from './BookingStore';
+import { bookingStore } from './Booking/BookingStore';
 import { barbershopStore } from './BarbershopStore';
 
 const Barbershop = styled.div`

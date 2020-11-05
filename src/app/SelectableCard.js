@@ -12,22 +12,27 @@ const SelectableCardLayout = styled.div`
   color: #000;
   transition: all 0.3s 0s ease-out;
 
-  &:hover {
-    border: 1px solid #e1e1e1;
-    background: #fff;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-  }
+  /* stylelint-disable indentation */
+
+  /* TODO: Fix incorrect working indentation inside tagged css */
+  ${({ isSelected }) => !isSelected && css`
+    &:hover {
+      border: 1px solid #e1e1e1;
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    }
+`}
 
   ${({ isSelected }) => isSelected && css`
-    /* stylelint-disable */
     background-color: #161616;
-    color: #ffffff;
+    color: #fff;
 
     &:hover {
       background-color: #161616;
       box-shadow: none;
     }
   `}
+  /* stylelint-enable indentation */
 `;
 
 const SelectableCard = ({

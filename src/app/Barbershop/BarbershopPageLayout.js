@@ -44,10 +44,11 @@ const Layout = styled.div`
   padding: 0 82px;
 
   ${({ hasBackgroundImage }) => hasBackgroundImage && css`
-  background:
-    linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #f7f7f7 71.83%),
-    url(${bgImage}) center center no-repeat;
-  background-size: cover;
+    /* stylelint-disable indentation */
+    background:
+      linear-gradient(270deg, rgba(247, 247, 247, 0) 6.5%, #f7f7f7 71.83%),
+      url(${bgImage}) center center no-repeat;
+    background-size: cover;
   `}
 `;
 
@@ -76,7 +77,7 @@ TopBarProgress.config({
   },
 });
 
-const AppLayout = observer(({ hasBackgroundImage, isLoading, children }) => (
+const BarbershopPageLayout = observer(({ hasBackgroundImage, isLoading, children }) => (
   <>
     <BaseStyle />
     <Layout hasBackgroundImage={hasBackgroundImage}>
@@ -89,13 +90,13 @@ const AppLayout = observer(({ hasBackgroundImage, isLoading, children }) => (
   </>
 ));
 
-AppLayout.propTypes = {
+BarbershopPageLayout.propTypes = {
   hasBackgroundImage: PropTypes.bool,
   isLoading: PropTypes.bool,
 };
 
-AppLayout.defaultProps = {
+BarbershopPageLayout.defaultProps = {
   isLoading: false,
 };
 
-export { AppLayout };
+export { BarbershopPageLayout };

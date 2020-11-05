@@ -4,24 +4,25 @@ import React from 'react';
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 
-import { bookingStore, STEP_CHOOSE_SERVICE, STEP_CHOOSE_BARBER } from './BookingStore';
+import { bookingStore, STEP_CHOOSE_SERVICE, STEP_CHOOSE_BARBER } from './Booking/BookingStore';
 import { barbershopStore } from './BarbershopStore';
 
-import { AppLayout } from './AppLayout';
-import { Order } from './Order';
-import { OptionsGrid } from './OptionsGrid';
-import { ServiceOption } from './ServiceOption';
-import { BarberOption } from './BarberOption';
+import { BarbershopPageLayout as BarbershopLayout } from './BarbershopPageLayout';
+import { Order } from './Booking/Order';
+import { OptionsGrid } from '~/src/app/OptionsGrid';
+import { ServiceOption } from './Booking/ServiceOption';
+import { BarberOption } from './Booking/BarberOption';
 import { BarbershopHero } from './BarbershopHero';
 
 const Section = styled.section`
   display: flex;
   align-items: flex-start;
   padding-top: 70px;
+  margin-bottom: 200px;
 `;
 
-const App = observer(() => (
-  <AppLayout
+const BarbershopPage = observer(() => (
+  <BarbershopLayout
     hasBackgroundImage={!bookingStore.currentStep}
     isLoading={barbershopStore.isLoading}
   >
@@ -30,7 +31,10 @@ const App = observer(() => (
     ) : (
       <Section>
         {bookingStore.currentStep === STEP_CHOOSE_BARBER && (
-          <OptionsGrid heading="Choose a barber" collection={barbershopStore.barbers}>
+          <OptionsGrid
+            heading="Choose a barber"
+            collection={bookingStore.availableBarbers}
+          >
             {(barber) => (
               <BarberOption
                 key={barber.id}
@@ -47,7 +51,10 @@ const App = observer(() => (
         )}
 
         {bookingStore.currentStep === STEP_CHOOSE_SERVICE && (
-          <OptionsGrid heading="Choose a service" collection={bookingStore.barber?.services || barbershopStore.services}>
+          <OptionsGrid
+            heading="Choose a service"
+            collection={bookingStore.availableServices}
+          >
             {(service) => (
               <ServiceOption
                 key={service.id}
@@ -68,7 +75,7 @@ const App = observer(() => (
         )}
       </Section>
     )}
-  </AppLayout>
+  </BarbershopLayout>
 ));
 
-export { App };
+export { BarbershopPage };
