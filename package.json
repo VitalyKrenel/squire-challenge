@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "date-fns": "^2.16.1",
     "eslint-import-resolver-parcel": "^1.10.5",
     "mobx": "^6.0.2",
     "mobx-react-lite": "^3.0.1",

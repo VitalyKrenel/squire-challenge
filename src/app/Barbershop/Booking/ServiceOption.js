@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { observer } from 'mobx-react-lite';
 import { SelectableCard } from '~/src/app/SelectableCard';
+import { asHoursAndMinutes } from './formatters/asHoursAndMinutes';
+import { asDollars } from './formatters/asDollars';
 
 const ServiceCard = styled(SelectableCard)`
   min-height: 134px;
@@ -52,11 +54,10 @@ const ServiceOption = observer(({ service, isSelected, onClick }) => (
     <ServiceName>{service.name}</ServiceName>
     <ServiceInfo>
       <Duration isSelected={isSelected}>
-        1 hr and 30 min
+        {asHoursAndMinutes(service.duration)}
       </Duration>
       <ServicePrice>
-        $
-        {service.price / 100}
+        {asDollars(service.price)}
       </ServicePrice>
     </ServiceInfo>
   </ServiceCard>
