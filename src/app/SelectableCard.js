@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { BaseButton } from './PrimaryButton';
 
-const SelectableCardLayout = styled(BaseButton)`
+const SelectableCardLayout = styled(BaseButton).attrs({ type: 'button' })`
   display: flex;
   width: 230px;
   flex-direction: column;
