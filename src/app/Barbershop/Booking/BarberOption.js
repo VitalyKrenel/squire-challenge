@@ -45,12 +45,28 @@ const Status = styled.p`
 `;
 
 const AboutBarberLink = styled.a`
+  position: relative;
   color: #006bb2;
   font-family: SF Pro Display, sans-serif;
   font-size: 17px;
   line-height: 20px;
   text-align: center;
   text-decoration: none;
+  transition: all 0.2s 0s ease-in-out;
+
+  &::after {
+    position: absolute;
+    right: 0;
+    bottom: -6px;
+    left: 0;
+    height: 0;
+    background-color: #006bb2;
+    content: '';
+  }
+
+  &:hover::after {
+    height: 2px;
+  }
 `;
 
 const BarberOption = ({ barber, isSelected, onClick }) => (
@@ -67,7 +83,9 @@ const BarberOption = ({ barber, isSelected, onClick }) => (
     <AvailabilityStatus>
       <Status>Available today</Status>
     </AvailabilityStatus>
-    <AboutBarberLink href="#">
+    <AboutBarberLink
+      href="#"
+    >
       About
       {' '}
       {barber.firstName}
